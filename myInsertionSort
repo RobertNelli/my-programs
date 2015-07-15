@@ -1,0 +1,47 @@
+#import "ViewController.h"
+
+@interface ViewController ()
+
+@end
+
+NSMutableArray *myInitialArray;
+NSArray *mySortedArray;
+NSString *myStringOfArray;
+UILabel *myLabel;
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    myInitialArray = [[NSMutableArray alloc]initWithObjects:@1, @205, @10, @7, @899, @0 , nil];
+    
+    mySortedArray = [[NSArray alloc]init];
+    mySortedArray = [self myInsertionSort:myInitialArray];
+    
+    myStringOfArray = [mySortedArray componentsJoinedByString:@","];
+    
+    myLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 300, 50)];
+    myLabel.text = myStringOfArray;
+    [self.view addSubview:myLabel];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+- (NSArray *)myInsertionSort: (NSMutableArray *) myUnsortedArray {
+    
+    for (int i = 1; i < myUnsortedArray.count; i++) {
+        int j = i;
+        
+        while (j > 0 && [myUnsortedArray objectAtIndex:j-1] > [myUnsortedArray objectAtIndex:j]) {
+            [myUnsortedArray exchangeObjectAtIndex:(j) withObjectAtIndex:j-1];
+            j--;
+        }
+    }
+    return myUnsortedArray;
+   
+}
+
+@end
