@@ -1,0 +1,65 @@
+#import "ViewController.h"
+
+@interface ViewController ()
+
+@end
+
+NSMutableArray *myInitialArray;
+NSArray *mySortedArray;
+NSString *myStringOfArray;
+UILabel *myLabel;
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    myInitialArray = [[NSMutableArray alloc]initWithObjects:@1, @205, @10, @7, @899, @0 , @100, @888, @999, nil];
+    
+    mySortedArray = [[NSArray alloc]init];
+    mySortedArray = [self myQuickSort:myInitialArray];
+    
+    myStringOfArray = [mySortedArray componentsJoinedByString:@","];
+    
+    myLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 300, 50)];
+    myLabel.text = myStringOfArray;
+    [self.view addSubview:myLabel];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSArray *)myQuickSort: (NSMutableArray *)myUnsortedArray {
+    NSMutableArray *lowerArray = [[NSMutableArray alloc]init];
+    NSMutableArray *higherArray = [[NSMutableArray alloc]init];
+    
+    if(myUnsortedArray.count < 1) return nil;                               //IF EMPTY
+    
+    //int randomPivotPoint = arc4random() % myUnsortedArray.count;            //RANDOM PIVOT
+    long randomPivotPoint = myUnsortedArray.count - 1;
+    
+    NSNumber *pivotValue = [myUnsortedArray objectAtIndex:randomPivotPoint]; //GET NUMBER AT INDEX OF PIVOT
+    
+    [myUnsortedArray removeObjectAtIndex:randomPivotPoint];                 //REMOVE PIVOT
+    
+    for (NSNumber *nums in myUnsortedArray) {                               //LOOP ARRAY, CHECK VALUES VS. PIVOT
+        if (nums < pivotValue) {
+            [lowerArray addObject:nums];
+        } else {
+            [higherArray addObject:nums];
+        }
+    }
+    
+    NSMutableArray *sortedArray = [[NSMutableArray alloc]init];
+    [sortedArray addObjectsFromArray:[self myQuickSort:lowerArray]];
+    [sortedArray addObject:pivotValue];
+    [sortedArray addObjectsFromArray:[self myQuickSort:higherArray]];
+    return sortedArray;
+    
+}
+
+@end
