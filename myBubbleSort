@@ -1,0 +1,51 @@
+#import "ViewController.h"
+
+@interface ViewController ()
+
+@end
+
+NSArray *myReturnedArray;
+NSMutableArray *myPassedArray;
+NSString *myStringOfArray;
+
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    myReturnedArray = [[NSArray alloc]init];
+    myPassedArray = [[NSMutableArray alloc]initWithObjects:@5, @4, @8, @62, @1, @2, nil];
+    
+    myReturnedArray = [self myBubbleSort:myPassedArray];
+    myStringOfArray = [myReturnedArray componentsJoinedByString:@","];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 100, 50)];
+    label.text = myStringOfArray;
+    [self.view addSubview:label];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSArray*)myBubbleSort:(NSMutableArray*)unsortedDataArray {
+    
+    bool swapped = TRUE;
+    while(swapped == TRUE) {
+        swapped = FALSE;
+        
+        for(int i = 1; i < unsortedDataArray.count; i++) {
+            if([unsortedDataArray objectAtIndex:(i-1)] > [unsortedDataArray objectAtIndex:(i)]) {
+                [unsortedDataArray exchangeObjectAtIndex:i-1 withObjectAtIndex:i];
+                swapped = TRUE;
+            }
+            
+        }
+    }
+    return unsortedDataArray;
+}
+@end
