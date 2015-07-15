@@ -1,0 +1,61 @@
+#import "ViewController.h"
+
+@interface ViewController ()
+
+@end
+
+NSArray *mySortedArray;
+NSMutableArray *myInitialArray;
+UILabel *myLabel;
+NSString *myStringOfArray;
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    myInitialArray = [[NSMutableArray alloc]initWithObjects:@1, @205, @10, @7, @899, @0 , nil];
+    
+    mySortedArray = [[NSArray alloc]init];
+    mySortedArray = [self mySelectionSort:myInitialArray];
+    
+    myStringOfArray = [mySortedArray componentsJoinedByString:@","];
+    
+    myLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 300, 50)];
+    myLabel.text = myStringOfArray;
+    [self.view addSubview:myLabel];
+    
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSArray *)mySelectionSort: (NSMutableArray *) myUnsortedArray {
+    
+    int lowestElement;
+    
+    for (int i = 0; i < myUnsortedArray.count; i++) {
+        lowestElement = i;
+        
+        for(int j = i + 1; j < myUnsortedArray.count; j++) {
+            
+            if ([myUnsortedArray objectAtIndex:j] < [myUnsortedArray objectAtIndex:lowestElement]) {
+                lowestElement = j;
+            }
+            
+        }
+        if(lowestElement != i) {
+            
+            [myUnsortedArray exchangeObjectAtIndex:i withObjectAtIndex:lowestElement];
+            
+        }
+    }
+    return myUnsortedArray;
+    
+}
+
+@end
